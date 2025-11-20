@@ -18,6 +18,10 @@ export default function UsersPage() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [deleteError, setDeleteError] = useState("");
+
 
 
   useEffect(() => {
@@ -117,9 +121,13 @@ export default function UsersPage() {
                       <button
                         className="btn-delete"
                         onClick={() => {
-                          setSelectedUser(u.nombre);
+                          setSelectedUser({ id: u.usuarioId, nombre: u.nombre });
+                          setPassword1("");
+                          setPassword2("");
+                          setDeleteError("");
                           setShowDeleteModal(true);
                         }}
+
                       >
                         Eliminar
                       </button>
@@ -145,7 +153,7 @@ export default function UsersPage() {
             <div className="delete-modal-box">
 
               <h2 className="delete-title">
-                ¿Está seguro de eliminar al usuario {selectedUser}?
+                ¿Está seguro de eliminar al usuario {selectedUser?.nombre}?
               </h2>
 
               <p className="delete-subtext">
@@ -156,32 +164,117 @@ export default function UsersPage() {
                 type="password"
                 className="delete-input"
                 placeholder="Contraseña"
+                value={password1}
+                onChange={(e) => setPassword1(e.target.value)}
               />
 
               <input
                 type="password"
                 className="delete-input"
                 placeholder="Confirmar contraseña"
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)}
               />
+
 
               <div className="delete-buttons">
                 <button
                   className="btn-confirm-delete"
-                  onClick={() => {
-                    setShowDeleteModal(false);
-                    setShowDeletePopup(true);
+                  onClick={async () => {
+                    setDeleteError("");
 
-                    setTimeout(() => {
-                      setShowDeletePopup(false);
-                    }, 2500);
+                    // 1. Validar contraseñas vacías o diferentes
+                    if (!password1 || !password2) {
+                      setDeleteError("Debe ingresar y confirmar la contraseña.");
+                      return;
+                    }
+
+                    if (password1 !== password2) {
+                      setDeleteError("Las contraseñas no coinciden.");
+                      return;
+                    }
+
+                    try {
+                      // 2. VALIDAR CONTRASEÑA DEL ADMIN
+                      const validar = await fetch(
+                        "http://localhost:8080/api/usuarios/validar-password",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                          },
+                          body: JSON.stringify({ password: password1 }),
+                        }
+                      );
+
+                      const msgValidar = await validar.text();
+
+                      if (!validar.ok) {
+                        setDeleteError(msgValidar);
+                        return;
+                      }
+
+                      // 3. CONTRASEÑA CORRECTA → ELIMINAR USUARIO
+                      const eliminar = await fetch(
+                        `http://localhost:8080/api/usuarios/eliminar/${selectedUser.id}`,
+                        {
+                          method: "DELETE",
+                          headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                          },
+                        }
+                      );
+
+                      const msgEliminar = await eliminar.text();
+
+                      if (!eliminar.ok) {
+
+                        // 4. USUARIO ES DTE Y TIENE EQUIPOS
+                        if (msgEliminar.includes("FK__Equipo__DteId")) {
+                          setDeleteError(
+                            "Este usuario es Director Técnico de un equipo y no puede ser eliminado. " +
+                            "Reasigne primero el equipo a otro DTE."
+                          );
+                          return;
+                        }
+
+                        setDeleteError(msgEliminar);
+                        return;
+                      }
+
+                      // 5. TODO BIEN → POPUP + REFRESCAR LISTA
+                      setShowDeleteModal(false);
+                      setShowDeletePopup(true);
+                      setPassword1("");
+                      setPassword2("");
+                      setDeleteError("");
+
+                      setUsuarios(usuarios.filter(u => u.usuarioId !== selectedUser.id));
+
+                      setTimeout(() => {
+                        setShowDeletePopup(false);
+                      }, 2500);
+
+                    } catch (err) {
+                      console.error(err);
+                      setDeleteError("Error al conectar con el servidor.");
+                    }
                   }}
                 >
                   Confirmar
                 </button>
 
+
                 <button
                   className="btn-cancel-delete"
-                  onClick={() => setShowDeleteModal(false)}
+                  onClick={() => {
+                    setDeleteError("");
+                    setPassword1("");
+                    setPassword2("");
+                    setShowDeleteModal(false);
+                  }}
+
                 >
                   Cancelar
                 </button>
