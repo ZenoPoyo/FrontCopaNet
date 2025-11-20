@@ -126,7 +126,7 @@ export default function AuditPage() {
             <SearchIcon className="search-icon" />
           </div>
 
-          <div className="audit-search-actions">
+          <div className="search-actions">
             <button className="btn-orange" onClick={aplicarFiltros}>
               Buscar
             </button>

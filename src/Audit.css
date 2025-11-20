@@ -116,7 +116,7 @@ max-height: 420px;
 .filters-dropdown {
   position: absolute;
   right: 0;
-  top: 45px;
+  top: 40px;
   background: #fff;
   padding: 18px;
   border-radius: 12px;
@@ -127,6 +127,11 @@ max-height: 420px;
   gap: 12px;
   z-index: 999;
 }
+
+.search-actions {
+  position: relative; /* ⬅ PERMITE QUE EL DROPDOWN SE POSICIONE RESPECTO A ESTO */
+}
+
 
 .filters-dropdown label {
   font-size: 14px;

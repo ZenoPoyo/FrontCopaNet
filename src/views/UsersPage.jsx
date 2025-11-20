@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Sidebar from "../components/Sidebar";
 import "../Users.css";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CheckIcon from "@mui/icons-material/Check";
-
-
 
 
 export default function UsersPage() {
@@ -21,7 +19,17 @@ export default function UsersPage() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [deleteError, setDeleteError] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const filtroRef = useRef(null);
 
+  const [filtros, setFiltros] = useState({
+    texto: "",
+    rol: "",
+    estado: ""
+  });
+
+  const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
+  
 
 
   useEffect(() => {
@@ -41,6 +49,8 @@ export default function UsersPage() {
 
         const data = await res.json();
         setUsuarios(data);
+        setUsuariosFiltrados(data);
+
 
       } catch (err) {
         console.error(err);
@@ -49,7 +59,57 @@ export default function UsersPage() {
     };
 
     cargarUsuarios();
-  }, []);
+    }, []);
+
+    useEffect(() => {
+      function handleClickOutside(e) {
+        if (filtroRef.current && !filtroRef.current.contains(e.target)) {
+          setShowFilters(false);
+        }
+      }
+
+      if (showFilters) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [showFilters]);
+
+
+
+
+    const aplicarFiltros = () => {
+    let filtrada = [...usuarios];
+
+    // === Texto libre: busca en cualquier campo
+    if (filtros.texto.trim() !== "") {
+      const t = filtros.texto.toLowerCase();
+
+      filtrada = filtrada.filter(u =>
+        (u.identificacion + "").toLowerCase().includes(t) ||
+        u.nombre.toLowerCase().includes(t) ||
+        u.rol.toLowerCase().includes(t) ||
+        u.estado.toLowerCase().includes(t)
+      );
+    }
+
+    // === Filtro por rol
+    if (filtros.rol !== "") {
+      filtrada = filtrada.filter(u =>
+        u.rol.toLowerCase() === filtros.rol.toLowerCase()
+      );
+    }
+
+    // === Filtro por estado
+    if (filtros.estado !== "") {
+      filtrada = filtrada.filter(u =>
+        u.estado.toLowerCase() === filtros.estado.toLowerCase()
+      );
+    }
+
+    setUsuariosFiltrados(filtrada);
+  };
+
 
   return (
     <div className="users-container">
@@ -60,13 +120,57 @@ export default function UsersPage() {
 
         <div className="search-row">
           <div className="search-bar">
-            <input type="text" placeholder="Buscar" />
+            <input
+              type="text"
+              placeholder="Buscar"
+              value={filtros.texto}
+              onChange={(e) => setFiltros({ ...filtros, texto: e.target.value })}
+            />
+
+
             <SearchIcon className="search-icon" />
           </div>
 
           <div className="search-actions">
-            <button className="btn-orange">Buscar</button>
-            <button className="btn-purple">Filtros</button>
+            <button className="btn-orange" onClick={aplicarFiltros}>
+              Buscar
+            </button>
+
+            <button
+              className="btn-purple"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              Filtros
+            </button>
+
+
+            {showFilters && (
+              <div className="filters-dropdown" ref={filtroRef}>
+                <label>Rol:</label>
+                <select
+                  value={filtros.rol}
+                  onChange={(e) => setFiltros({ ...filtros, rol: e.target.value })}
+                >
+                  <option value="">Todos</option>
+                  <option value="Administrador">Admin</option>
+                  <option value="DTE">DTE</option>
+                </select>
+
+                <label>Estado:</label>
+                <select
+                  value={filtros.estado}
+                  onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
+                >
+                  <option value="">Todos</option>
+                  <option value="Activo">Activo</option>
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </div>
+            )}
+
+
+
           </div>
         </div>
 
@@ -110,7 +214,7 @@ export default function UsersPage() {
                   </td>
                 </tr>
               ) : (
-                usuarios.map((u, idx) => (
+                usuariosFiltrados.map((u, idx) => (
                   <tr key={idx}>
                     <td>{u.identificacion}</td>
                     <td>{u.nombre}</td>
