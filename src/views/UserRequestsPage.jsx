@@ -14,6 +14,13 @@ export default function UsuarioSolicitudesPage() {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const [solicitudes, setSolicitudes] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+  const solicitudesFiltradas = solicitudes.filter(s =>
+    s.usuarioId.toString().includes(busqueda.toLowerCase()) ||
+    s.identificacion.toLowerCase().includes(busqueda.toLowerCase()) ||
+    s.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
 
   const cargarSolicitudes = async () => {
     const res = await fetch("http://localhost:8080/api/usuarios/listar", {
@@ -48,7 +55,7 @@ export default function UsuarioSolicitudesPage() {
     const msg = await res.text();
 
     if (res.ok) {
-      setShowPopup(nuevoEstado === "Activo" ? "ok" : "no");
+      setShowPopup(nuevoEstado === "ACTIVO" ? "ok" : "no");
 
       cargarSolicitudes();
 
@@ -73,16 +80,17 @@ export default function UsuarioSolicitudesPage() {
 
         <div className="search-row">
           <div className="search-bar">
-            <input type="text" placeholder="Buscar" />
+            <input
+              type="text"
+              placeholder="Buscar por nombre o identificación"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
+
             <SearchIcon className="search-icon" />
           </div>
 
-          <div className="search-actions">
-            <button className="btn-orange">Buscar</button>
-            <button className="btn-purple">
-              Filtros
-            </button>
-          </div>
+          
         </div>
 
 
@@ -102,7 +110,8 @@ export default function UsuarioSolicitudesPage() {
             </thead>
 
             <tbody>
-              {solicitudes.map((s, i) => (
+              {solicitudesFiltradas.map((s, i) => (
+
                 <tr
                   key={i}
                   className={selectedRow === i ? "selected-row" : ""}
