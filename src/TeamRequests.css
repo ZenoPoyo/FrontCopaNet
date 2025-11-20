@@ -1,0 +1,154 @@
+.equipos-container {
+  display: flex;
+  min-height: 100vh;
+  background: #1e1e1e;
+}
+
+.equipos-main {
+  flex: 1;
+  padding: 25px 35px;
+  color: white;
+}
+
+.btn-back {
+  background: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.btn-back svg {
+  font-size: 20px;
+}
+
+
+.search-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.search-bar {
+  width: 350px;
+  background: #3a3a3a;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: white;
+  outline: none;
+}
+
+.search-icon {
+  font-size: 21px;
+}
+
+.search-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-orange {
+  background: #ff6a00;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-purple {
+  background: #93278f;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.equipos-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  font-size: 15px;
+  color: white;
+  text-align: left;
+}
+
+
+.table-container table thead th {
+  background: #3a3a3a;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr:hover {
+  background: rgba(147, 39, 143, 0.35);
+}
+
+.selected-row {
+  background: #93278f !important;
+}
+
+.detail-btn {
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.table-container {
+  height: 350px; 
+  overflow-y: auto;
+  background: #3a3a3a;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+
+.table-scroll {
+  width: 100%;
+  overflow-x: hidden;
+}

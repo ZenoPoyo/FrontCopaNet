@@ -1,0 +1,230 @@
+
+.solicitudes-container {
+  display: flex;
+  min-height: 100vh;
+  height: 100vh;
+  background: #1e1e1e;
+}
+
+.solicitudes-main {
+  flex: 1;
+  padding: 25px 40px;
+  color: white;
+  height: 100vh;           
+  overflow-y: hidden;
+}
+
+
+.btn-back {
+  background: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+
+.search-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.search-bar {
+  width: 60%;
+  background: black;
+  border-radius: 12px;
+  padding: 0 18px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+}
+
+.search-icon {
+  font-size: 22px;
+}
+
+.search-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-orange {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-purple {
+  background: #c750ff;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+.solicitudes-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+
+
+.solicitudes-table-container {
+  width: 100%;
+  background: #3a3a3a;
+  border-radius: 16px;
+  padding: 20px;
+  
+  max-height: 420px;    
+  overflow-y: auto;      
+  box-sizing: border-box;
+margin-bottom: 40px !important;
+}
+
+.solicitudes-table-container table {
+  display: block;
+  width: 100%;
+}
+
+.solicitudes-table-container tbody {
+  display: table;
+  width: 100%;
+}
+
+.solicitudes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.solicitudes-table th {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.solicitudes-table td {
+  padding: 14px 10px;
+  border-top: 1px solid #555;
+  font-size: 16px;
+}
+
+
+tbody tr:hover {
+  background: rgba(147, 39, 143, 0.35);
+  cursor: pointer;
+}
+
+.selected-row {
+  background: #93278f !important;
+}
+
+
+.btn-accept {
+  background: #19cf32;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-reject {
+  background: #c40000;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+.solicitudes-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.solicitudes-table-container::-webkit-scrollbar-track {
+  background: transparent;   
+}
+
+.solicitudes-table-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff !important; 
+  border-radius: 10px;
+  border: 2px solid transparent; 
+}
+
+
+.solicitudes-table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff transparent;
+}
+
+
+.popup {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 18px 28px;
+  background: black;
+  border-radius: 16px;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeInOut 2.5s ease forwards;
+  z-index: 2000;
+}
+
+.icon {
+  font-size: 26px;
+}
+
+.success .icon {
+  color: #19cf32;
+}
+
+.reject .icon {
+  color: #c40000;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #1e1e1e !important; 
+}

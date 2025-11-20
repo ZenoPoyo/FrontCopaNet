@@ -1,0 +1,194 @@
+
+.audit-container {
+  display: flex;
+  background: #1e1e1e;
+  min-height: 100vh;
+  color: white;
+}
+
+.audit-main {
+  flex: 1;
+  padding: 25px 40px;
+  overflow-y: auto;
+}
+
+
+.audit-search-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.audit-search-bar {
+  width: 73%;
+  min-width: 520px;
+  background: black;
+  border-radius: 12px;
+  padding: 0 18px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.audit-search-bar input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+}
+
+.audit-search-icon {
+  font-size: 22px;
+  margin-left: 8px;
+}
+
+.audit-search-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-orange {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-purple {
+  background: #c750ff;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.audit-table-container {
+  width: 100%;
+  background: #000;
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-top: 50px;
+  box-sizing: border-box;
+  max-height: 420px;      
+overflow-y: auto;       
+max-height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.audit-table th {
+  font-size: 15px;
+  font-weight: 700;
+  padding-bottom: 14px;
+}
+
+.audit-table td:nth-child(2) {
+  width: 100px;     
+  min-width: 100px;
+  max-width: 200px; 
+  white-space: nowrap; 
+}
+
+.audit-table td {
+  padding: 14px 10px;
+  font-size: 15px;
+  border-top: 1px solid #333;
+}
+
+.audit-table tr:hover {
+  background: rgba(106, 30, 95, 0.6); 
+  cursor: pointer;
+}
+.filters-dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.25);
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.filters-dropdown label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.filters-dropdown input,
+.filters-dropdown select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+}
+
+.filters-dropdown input:focus,
+.filters-dropdown select:focus {
+  border-color: #e67e22;
+  outline: none;
+  box-shadow: 0 0 2px rgba(230,126,34,0.5);
+}
+
+
+
+.audit-export-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.btn-export {
+  background: #c40000;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+body,
+.audit-container,
+.audit-main {
+  overflow-x: hidden !important;
+}
+
+
+.audit-table-container::-webkit-scrollbar {
+  width: 8px;     
+}
+
+.audit-table-container::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+.audit-table-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff !important; 
+  border-radius: 10px;                  
+  border: 2px solid transparent;        
+}
+
+.audit-table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff transparent; 
+}

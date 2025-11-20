@@ -1,0 +1,289 @@
+
+.teams-container {
+  display: flex;
+  background: #1e1e1e;
+  min-height: 100vh;
+  color: white;
+}
+
+.teams-main {
+  flex: 1;
+  padding: 25px 40px;
+  overflow-y: auto;
+}
+
+
+
+.teams-search-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.teams-search-bar {
+  width: 60%;
+  background: black;
+  border-radius: 12px;
+  padding: 0 18px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.teams-search-bar input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+}
+
+.teams-search-icon {
+  font-size: 22px;
+  margin-left: 8px;
+}
+
+.teams-search-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-orange {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-purple {
+  background: #c750ff;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+
+.teams-actions-row {
+  display: flex;
+  justify-content: flex-end; 
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
+.btn-solicitudes-teams {
+  background: #d4d4d4;
+  border-radius: 16px;
+  padding: 12px 18px;        
+  font-size: 22px;
+  font-weight: 700;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+
+  min-width: 420px;          
+  max-width: 480px;          
+}
+
+.teams-icon {
+  margin-right: 12px;
+  font-size: 28px;
+}
+
+
+
+.teams-table-container {
+  width: 100%;
+  background: #4a4a4a; 
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  max-height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.teams-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.teams-table th {
+  font-size: 16px;
+  font-weight: 700;
+  padding-bottom: 14px;
+}
+
+.teams-table td {
+  padding: 14px 8px;
+  font-size: 15px;
+  color: white;
+  border-top: 1px solid #555;
+}
+
+.td-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-delete {
+  background: #c40000;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+body,
+.teams-container,
+.teams-main {
+  overflow-x: hidden !important;
+}
+
+
+.delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; 
+}
+
+
+.delete-modal {
+  background: #1b1b1b; 
+  padding: 30px 40px;
+  border-radius: 18px;
+  width: 520px;                 
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+
+.modal-subtext {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  color: #cfcfcf;
+}
+
+
+.modal-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  border: none;
+  outline: none;
+  background: #e3e3e3;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-confirm {
+  background: #19cf32;
+  color: white;
+  padding: 10px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btn-cancel {
+  background: #c40000;
+  color: white;
+  padding: 10px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+
+.teams-table-container::-webkit-scrollbar {
+  width: 8px;          
+}
+
+.teams-table-container::-webkit-scrollbar-track {
+  background: transparent;  
+}
+
+.teams-table-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff !important; 
+  border-radius: 10px;                  
+  border: 2px solid transparent;        
+}
+
+.teams-table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff transparent; 
+}
+
+
+.success-popup {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000000;
+  padding: 18px 28px;
+  border-radius: 16px;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 2000;
+
+
+  opacity: 0;
+  animation: fadeInOut 2.5s ease forwards;
+}
+
+.success-check {
+  font-size: 28px;
+  color: #19cf32;
+  margin-left: 6px;
+}
+
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}

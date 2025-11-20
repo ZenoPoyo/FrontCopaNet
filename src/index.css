@@ -1,0 +1,159 @@
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  background-image: url('src/assets/fondo.jpg'); 
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: #213547;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.recover-container {
+  width: 360px;
+  height: 480px;
+  background: #000;
+  border-radius: 4px;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+
+.title-orange {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff6a00;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+.icon-large {
+  font-size: 70px;
+  color: #ff6a00;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.description {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.recover-input {
+  width: 100%;
+  height: 40px;
+  background: #000;
+  border: 1.5px solid #fff;
+  border-radius: 5px;
+  padding-left: 10px;
+  color: white;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.recover-btn {
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  color: #000;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+
+.return-link {
+  margin-top: 15px;
+  font-size: 13px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.otp-wrapper {
+  display: flex;
+  gap: 12px;
+  margin: 15px 0 25px;
+}
+
+.otp-box {
+  width: 48px;
+  height: 58px;
+  border: 2px solid #fff;
+  background: #000;
+  border-radius: 5px;
+  font-size: 32px;
+  text-align: center;
+  color: #fff;
+}
