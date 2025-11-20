@@ -10,7 +10,6 @@
   color: white;
 }
 
-
 .btn-back {
   background: none;
   border: none;
@@ -32,7 +31,6 @@
   margin-bottom: 28px;
 }
 
-
 .info-grid {
   width: 88%;
   margin-bottom: 35px;
@@ -43,7 +41,6 @@
   font-size: 15px;
 }
 
-
 .section-title {
   width: 88%;
   margin: 20px 0 12px;
@@ -52,11 +49,14 @@
   font-weight: 700;
 }
 
+/* ======= TABLAS (Plantilla y Torneos) ======= */
 
+/* Contenedor con scroll vertical para la tabla */
 .details-table {
   width: 88%;
   background: #000000;
-  padding: 10px;
+  /* QUITAMOS el padding que generaba el gap */
+  padding: 0;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.1);
   max-height: 180px;
@@ -64,9 +64,20 @@
   margin-bottom: 25px;
 }
 
+/* Aseguramos que la tabla ocupe todo el ancho */
 .details-table table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;              /* por si acaso */
+}
+
+/* Cabecera fija (sticky) – incluye la línea inferior */
+.details-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: #000000;
 }
 
 .details-table th {
@@ -82,13 +93,11 @@
   padding: 7px 6px;
   color: rgba(255,255,255,0.9);
 }
-
-
 .details-table tbody tr:hover {
   background: rgba(255,255,255,0.08);
 }
 
-
+/* Scrollbar del contenedor de la tabla */
 .details-table::-webkit-scrollbar {
   width: 6px;
 }
@@ -96,4 +105,3 @@
   background: #ffffff;
   border-radius: 10px;
 }
-

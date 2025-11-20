@@ -101,7 +101,7 @@ export default function TeamDetailsPage() {
                     <td>{jugador.identificacion ?? "N/A"}</td>
                     <td>{jugador.nombre ?? "N/A"}</td>
                     {/* no tenemos campo camiseta en BD -> N/A */}
-                    <td>{"N/A"}</td>
+                    <td>{jugador.camiseta ?? "N/A"}</td>
                     <td>{jugador.posicion ?? "N/A"}</td>
                   </tr>
                 ))

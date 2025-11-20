@@ -219,7 +219,12 @@ export default function AuditPage() {
                   <tr key={idx}>
                     <td>{b.fecha}</td>
                     <td>{b.usuario}</td>
-                    <td>{b.accion}</td>
+                    <td>
+  {b.accion === "APROBAR" ? "Aprobado" :
+   b.accion === "RECHAZAR" ? "Rechazado" :
+   b.accion === "ELIMINAR" ? "Eliminado" :
+   b.accion}
+</td>
                     <td>{b.entidad}</td>
                     <td>{b.usuario}</td>
                     <td>{b.detalle}</td>
