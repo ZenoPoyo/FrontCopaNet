@@ -93,25 +93,27 @@
 
 .solicitudes-table-container {
   width: 100%;
-  background: #3a3a3a;
-  border-radius: 16px;
-  padding: 20px;
-  
-  max-height: 420px;    
-  overflow-y: auto;      
+  background: #4a4a4a; 
+  border-radius: 18px;
+  padding: 0 18px 14px 18px;  
+  margin-top: 5px;
   box-sizing: border-box;
-margin-bottom: 40px !important;
+  max-height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 65vh; 
+  position: relative; 
 }
 
-.solicitudes-table-container table {
-  display: block;
-  width: 100%;
+.solicitudes-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #4a4a4a;   
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 18px 14px;
 }
 
-.solicitudes-table-container tbody {
-  display: table;
-  width: 100%;
-}
 
 .solicitudes-table {
   width: 100%;
@@ -125,7 +127,7 @@ margin-bottom: 40px !important;
 }
 
 .solicitudes-table td {
-  padding: 14px 10px;
+  padding: 14px 20px;
   border-top: 1px solid #555;
   font-size: 16px;
 }
@@ -228,3 +230,22 @@ html, body {
   padding: 0;
   background: #1e1e1e !important; 
 }
+
+.solicitudes-table th,
+.solicitudes-table td {
+  padding: 12px 18px;
+  text-align: left;
+}
+
+.solicitudes-table th {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.solicitudes-table td {
+  font-size: 1rem;
+}
+
+.solicitudes-table td:nth-child(1) { width: 130px; }   /* referencia */
+.solicitudes-table td:nth-child(2) { width: 180px; }   /* identificación */
+.solicitudes-table td:nth-child(3) { width: 280px; }   /* nombre */

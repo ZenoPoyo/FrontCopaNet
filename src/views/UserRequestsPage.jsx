@@ -5,28 +5,60 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 
 export default function UsuarioSolicitudesPage() {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(null); 
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const solicitudes = [
-    { ref: "#4566675", id: "602340234", nombre: "Heriberto Gómez" },
-    { ref: "#4566675", id: "602340234", nombre: "Juan Gómez" },
-    { ref: "#4566875", id: "602340234", nombre: "Michael Pérez" },
-    { ref: "#4564675", id: "602340234", nombre: "Carlos Monge" },
-    { ref: "#4566475", id: "602340234", nombre: "Rodrigo Hernández" },
-    { ref: "#4566875", id: "602340234", nombre: "Michael Pérez" },
-    { ref: "#4564675", id: "602340234", nombre: "Carlos Monge" },
-    { ref: "#4566475", id: "602340234", nombre: "Rodrigo Hernández" },
-  ];
+  const [solicitudes, setSolicitudes] = useState([]);
 
-  const handleAction = (type) => {
-    setShowPopup(type);
-    setTimeout(() => setShowPopup(null), 2500);
+  const cargarSolicitudes = async () => {
+    const res = await fetch("http://localhost:8080/api/usuarios/listar", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+
+    const data = await res.json();
+
+    setSolicitudes(data.filter(u => u.estado === "PENDIENTE"));
   };
+
+  useEffect(() => {
+    cargarSolicitudes();
+  }, []);
+
+
+
+  const procesarSolicitud = async (usuarioId, nuevoEstado) => {
+
+  const res = await fetch(
+      `http://localhost:8080/api/usuarios/solicitud/${usuarioId}?estado=${nuevoEstado}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+    );
+
+    const msg = await res.text();
+
+    if (res.ok) {
+      setShowPopup(nuevoEstado === "Activo" ? "ok" : "no");
+
+      cargarSolicitudes();
+
+      setTimeout(() => setShowPopup(null), 2500);
+
+    } else {
+      alert("Error: " + msg);
+    }
+  };
+
 
   return (
     <div className="solicitudes-container">
@@ -76,17 +108,19 @@ export default function UsuarioSolicitudesPage() {
                   className={selectedRow === i ? "selected-row" : ""}
                   onClick={() => setSelectedRow(i)}
                 >
-                  <td>{s.ref}</td>
-                  <td>{s.id}</td>
+                  <td>{s.usuarioId}</td>        
+                  <td>{s.identificacion}</td>
                   <td>{s.nombre}</td>
+
 
                   <td>
                     <button
                       className="btn-accept"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleAction("ok");
+                        procesarSolicitud(s.usuarioId, "ACTIVO");
                       }}
+
                     >
                       Aceptar
                     </button>
@@ -97,8 +131,9 @@ export default function UsuarioSolicitudesPage() {
                       className="btn-reject"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleAction("no");
+                        procesarSolicitud(s.usuarioId, "RECHAZADO");
                       }}
+
                     >
                       Rechazar
                     </button>

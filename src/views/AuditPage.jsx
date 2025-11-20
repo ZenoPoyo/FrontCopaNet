@@ -138,15 +138,6 @@ export default function AuditPage() {
 
             {showFilters && (
               <div className="filters-dropdown" ref={filtroRef}>
-              
-
-                <label>Usuario:</label>
-                <input
-                  type="text"
-                  placeholder="Ej: Keisy Jiménez"
-                  value={filtros.usuario}
-                  onChange={(e) => setFiltros({ ...filtros, usuario: e.target.value })}
-                />
 
                 <label>Acción:</label>
                 <select
@@ -157,17 +148,23 @@ export default function AuditPage() {
                   <option value="Crear">Crear</option>
                   <option value="Modificar">Modificar</option>
                   <option value="Eliminar">Eliminar</option>
-                  <option value="Acceso">Acceso</option>
-                  <option value="Error">Error</option>
+                  <option value="Aceptar">Aceptar</option>
+                  <option value="Rechazar">Rechazar</option>
                 </select>
 
                 <label>Entidad:</label>
-                <input
-                  type="text"
-                  placeholder="Usuario, Equipos, Pagos…"
+                <select
                   value={filtros.entidad}
                   onChange={(e) => setFiltros({ ...filtros, entidad: e.target.value })}
-                />
+                >
+                  <option value="">Todas</option>
+                  <option value="Usuario">Usuario</option>
+                  <option value="Equipo">Equipo</option>
+                  <option value="Partido">Torneo</option>
+                  <option value="Pago">Pago</option>
+                  <option value="Solicitud">Sanción</option>
+                </select>
+
 
                 {/* === Filtro Fecha desde === */}
                 <label>Fecha desde:</label>

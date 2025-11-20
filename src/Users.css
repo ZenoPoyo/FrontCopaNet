@@ -52,6 +52,9 @@
   gap: 12px;
 }
 
+
+
+
 .filters-dropdown {
   position: absolute;
   right: 0;
@@ -145,12 +148,23 @@
   width: 100%;
   background: #4a4a4a; 
   border-radius: 18px;
-  padding: 14px 18px;
+  padding: 0 18px 14px 18px;  
   margin-top: 5px;
   box-sizing: border-box;
   max-height: 420px;
   overflow-y: auto;
   overflow-x: hidden;
+  max-height: 65vh; 
+  position: relative;  
+}
+
+.users-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #4a4a4a;   
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 18px 14px;
 }
 
 .users-table {

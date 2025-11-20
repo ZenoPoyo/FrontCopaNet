@@ -48,8 +48,9 @@ export default function UsersPage() {
         }
 
         const data = await res.json();
-        setUsuarios(data);
-        setUsuariosFiltrados(data);
+        const filtrados = data.filter(u => u.estado !== "RECHAZADO");
+        setUsuarios(filtrados);
+        setUsuariosFiltrados(filtrados);
 
 
       } catch (err) {
@@ -222,27 +223,31 @@ export default function UsersPage() {
                     <td>{u.estado}</td>
 
                     <td className="td-actions">
-                      <button
-                        className="btn-delete"
-                        onClick={() => {
-                          setSelectedUser({ id: u.usuarioId, nombre: u.nombre });
-                          setPassword1("");
-                          setPassword2("");
-                          setDeleteError("");
-                          setShowDeleteModal(true);
-                        }}
+                      {u.estado !== "PENDIENTE" && (
+                        <>
+                          <button
+                            className="btn-delete"
+                            onClick={() => {
+                              setSelectedUser({ id: u.usuarioId, nombre: u.nombre });
+                              setPassword1("");
+                              setPassword2("");
+                              setDeleteError("");
+                              setShowDeleteModal(true);
+                            }}
+                          >
+                            Eliminar
+                          </button>
 
-                      >
-                        Eliminar
-                      </button>
-
-                      <button
-                        className="btn-modify"
-                        onClick={() => navigate("/users/edit/" + u.identificacion)}
-                      >
-                        Modificar
-                      </button>
+                          <button
+                            className="btn-modify"
+                            onClick={() => navigate("/users/edit/" + u.identificacion)}
+                          >
+                            Modificar
+                          </button>
+                        </>
+                      )}
                     </td>
+
                   </tr>
                 ))
               )}
