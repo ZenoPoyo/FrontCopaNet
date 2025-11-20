@@ -22,7 +22,7 @@ function App() {
         <Route path="/teams/requests" element={<TeamRequestsPage />} />
         <Route path="/teams/details" element={<TeamDetailsPage />} />
         <Route path="/user/requests" element={<UserRequestsPage />} />
-        <Route path="/users/edit" element={<UserEditPage />} />
+        <Route path="/users/edit/:identificacion" element={<UserEditPage />} />
         <Route path="/user/register" element={<UserRegisterPage />} />
       </Routes>
     </BrowserRouter>

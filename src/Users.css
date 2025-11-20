@@ -114,6 +114,12 @@
   border: none;
 }
 
+.delete-error {
+  color: #ff4d4d;
+  margin-top: 8px;
+  font-size: 14px;
+  text-align: center;
+}
 
 .users-table-container {
   width: 100%;

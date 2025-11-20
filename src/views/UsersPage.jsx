@@ -176,6 +176,11 @@ export default function UsersPage() {
                 onChange={(e) => setPassword2(e.target.value)}
               />
 
+              {deleteError && (
+                <p className="delete-error">{deleteError}</p>
+              )}
+
+
 
               <div className="delete-buttons">
                 <button
