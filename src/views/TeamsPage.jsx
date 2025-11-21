@@ -175,24 +175,6 @@ const FILTER_OPTIONS = [
 
   {isFilterOpen && (
     <div className="filters-dropdown" ref={filtroRef}>
-      
-      {/* ORDEN POR ID */}
-      <div className="filter-group">
-        <label className="filter-title">Orden por referencia</label>
-        <select
-          className="filter-select"
-          value={
-            selectedFilter === "id-asc" || selectedFilter === "id-desc"
-              ? selectedFilter
-              : ""
-          }
-          onChange={(e) => setSelectedFilter(e.target.value)}
-        >
-          <option value="">Seleccione...</option>
-          <option value="id-asc">Ascendente</option>
-          <option value="id-desc">Descendente</option>
-        </select>
-      </div>
 
       {/* ORDEN POR NOMBRE */}
       <div className="filter-group">
