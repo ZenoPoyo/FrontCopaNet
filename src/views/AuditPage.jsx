@@ -2,6 +2,8 @@ import Sidebar from "../components/Sidebar";
 import "../Audit.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState, useEffect, useRef } from "react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 import { getBitacora } from "../services/bitacoraService";  // <--- IMPORTANTE
 
@@ -104,7 +106,34 @@ export default function AuditPage() {
       setBitacoraFiltrada(filtrada);
     };
 
-   
+    const exportarExcel = () => {
+      if (!bitacoraFiltrada || bitacoraFiltrada.length === 0) {
+        alert("No hay datos para exportar");
+        return;
+      }
+
+      const data = bitacoraFiltrada.map(b => ({
+        Fecha: b.fecha,
+        Usuario: b.usuario,
+        Acción: b.accion,
+        Entidad: b.entidad,
+        Detalle: b.detalle
+      }));
+
+      const hoja = XLSX.utils.json_to_sheet(data);
+      const libro = XLSX.utils.book_new();
+
+      XLSX.utils.book_append_sheet(libro, hoja, "Auditoria");
+
+      const excelBuffer = XLSX.write(libro, { bookType: "xlsx", type: "array" });
+
+      const blob = new Blob([excelBuffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      saveAs(blob, "Auditoria.xlsx");
+    };
+
 
 
   return (
@@ -220,11 +249,11 @@ export default function AuditPage() {
                     <td>{b.fecha}</td>
                     <td>{b.usuario}</td>
                     <td>
-  {b.accion === "APROBAR" ? "Aprobado" :
-   b.accion === "RECHAZAR" ? "Rechazado" :
-   b.accion === "ELIMINAR" ? "Eliminado" :
-   b.accion}
-</td>
+                      {b.accion === "APROBAR" ? "Aprobado" :
+                      b.accion === "RECHAZAR" ? "Rechazado" :
+                      b.accion === "ELIMINAR" ? "Eliminado" :
+                      b.accion}
+                    </td>
                     <td>{b.entidad}</td>
                     <td>{b.usuario}</td>
                     <td>{b.detalle}</td>
@@ -239,7 +268,9 @@ export default function AuditPage() {
         </div>
 
         <div className="audit-export-row">
-          <button className="btn-export">Exportar</button>
+          <button className="btn-export" onClick={exportarExcel}>
+            Exportar
+          </button>
         </div>
 
       </main>
