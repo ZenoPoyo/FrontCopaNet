@@ -2,7 +2,7 @@ import Sidebar from "../components/Sidebar";
 import "../Teams.css";
 import SearchIcon from "@mui/icons-material/Search";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEquipos } from "../services/teamService";
 
@@ -127,6 +127,20 @@ const FILTER_OPTIONS = [
     }
   };
 
+  const filtroRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutside = (e) => {
+      if (filtroRef.current && !filtroRef.current.contains(e.target)) {
+        setIsFilterOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, []);
+
+
   return (
     <div className="teams-container">
       <Sidebar />
@@ -151,48 +165,95 @@ const FILTER_OPTIONS = [
 
             {/* BOTÓN FILTROS + DROPDOWN */}
             <div className="filters-wrapper" style={{ position: "relative" }}>
-              <button
-                className="btn-purple"
-                type="button"
-                onClick={() => setIsFilterOpen((prev) => !prev)}
-              >
-                Filtros
-              </button>
+  <button
+    className="btn-purple"
+    type="button"
+    onClick={() => setIsFilterOpen((prev) => !prev)}
+  >
+    Filtros
+  </button>
 
-              {isFilterOpen && (
-                <div className="filters-dropdown">
-                  {FILTER_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.value}
-                      className={
-                        "filter-option" +
-                        (selectedFilter === opt.value ? " active" : "")
-                      }
-                      type="button"
-                      onClick={() => {
-                        setSelectedFilter(opt.value);
-                        setIsFilterOpen(false);
-                      }}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
+  {isFilterOpen && (
+    <div className="filters-dropdown" ref={filtroRef}>
+      
+      {/* ORDEN POR ID */}
+      <div className="filter-group">
+        <label className="filter-title">Orden por referencia</label>
+        <select
+          className="filter-select"
+          value={
+            selectedFilter === "id-asc" || selectedFilter === "id-desc"
+              ? selectedFilter
+              : ""
+          }
+          onChange={(e) => setSelectedFilter(e.target.value)}
+        >
+          <option value="">Seleccione...</option>
+          <option value="id-asc">Ascendente</option>
+          <option value="id-desc">Descendente</option>
+        </select>
+      </div>
 
-                  {selectedFilter !== "none" && (
-                    <button
-                      type="button"
-                      className="filter-clear"
-                      onClick={() => {
-                        setSelectedFilter("none");
-                        setIsFilterOpen(false);
-                      }}
-                    >
-                      Quitar filtro
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
+      {/* ORDEN POR NOMBRE */}
+      <div className="filter-group">
+        <label className="filter-title">Nombre del equipo</label>
+        <select
+          className="filter-select"
+          value={
+            selectedFilter === "nombre-asc" ||
+            selectedFilter === "nombre-desc"
+              ? selectedFilter
+              : ""
+          }
+          onChange={(e) => setSelectedFilter(e.target.value)}
+        >
+          <option value="">Seleccione...</option>
+          <option value="nombre-asc">A - Z</option>
+          <option value="nombre-desc">Z - A</option>
+        </select>
+      </div>
+
+      {/* ORDEN POR DTE */}
+      <div className="filter-group">
+        <label className="filter-title">Director técnico</label>
+        <select
+          className="filter-select"
+          value={
+            selectedFilter === "dte-asc" || selectedFilter === "dte-desc"
+              ? selectedFilter
+              : ""
+          }
+          onChange={(e) => setSelectedFilter(e.target.value)}
+        >
+          <option value="">Seleccione...</option>
+          <option value="dte-asc">A - Z</option>
+          <option value="dte-desc">Z - A</option>
+        </select>
+      </div>
+
+      {/* FILTRO POR ESTADO */}
+      <div className="filter-group">
+        <label className="filter-title">Estado</label>
+        <select
+          className="filter-select"
+          value={
+            selectedFilter === "estado-activo" ||
+            selectedFilter === "estado-inactivo"
+              ? selectedFilter
+              : ""
+          }
+          onChange={(e) => setSelectedFilter(e.target.value)}
+        >
+          <option value="">Seleccione...</option>
+          <option value="estado-activo">Activo</option>
+          <option value="estado-inactivo">Inactivo</option>
+        </select>
+      </div>
+
+    </div>
+  )}
+</div>
+
           </div>
         </div>
 

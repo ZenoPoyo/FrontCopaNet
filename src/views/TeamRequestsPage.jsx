@@ -7,7 +7,8 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
 import {
   getSolicitudesPlantilla,
   aprobarSolicitud,
@@ -27,8 +28,9 @@ export default function TeamRequestsPage() {
   const [showFilters, setShowFilters] = useState(false);
 
   const handleBack = () => navigate("/teams");
+  const filtroRef = useRef(null);
 
-  // 👉 Ahora handleAction llama al backend y actualiza la lista
+
   const handleAction = async (type) => {
     if (!selectedSolicitud || !selectedSolicitud.id) {
       console.error("No hay solicitud seleccionada o falta id");
@@ -74,7 +76,20 @@ export default function TeamRequestsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // --- Helpers ---
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (filtroRef.current && !filtroRef.current.contains(e.target)) {
+        setShowFilters(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+  }, []);
 
   const parseReferencia = (ref) => {
     if (!ref) return 0;
@@ -191,109 +206,61 @@ export default function TeamRequestsPage() {
               </button>
 
               {showFilters && (
-                <div
-                  className="filters-dropdown"
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    marginTop: "8px",
-                    backgroundColor: "#2f2f2f",
-                    borderRadius: "8px",
-                    padding: "10px 12px",
-                    minWidth: "220px",
-                    zIndex: 10,
-                  }}
-                >
-                  <button
-                    className="filter-item"
-                    type="button"
-                    onClick={resetFilters}
-                    style={{ width: "100%", marginBottom: "8px" }}
-                  >
-                    Quitar filtros
-                  </button>
+                <div className="filters-dropdown" ref={filtroRef}>
 
+                  {/* DTE */}
                   <div className="filter-group">
-                    <p className="filter-title">Referencia</p>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={handleRefAsc}
+                    <label className="filter-title">DTE</label>
+                    <select
+                      className="filter-select"
+                      onChange={(e) => {
+                        if (e.target.value === "ASC") handleDteAsc();
+                        else if (e.target.value === "DESC") handleDteDesc();
+                      }}
+                      defaultValue=""
                     >
-                      Ascendente
-                    </button>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={handleRefDesc}
-                    >
-                      Descendente
-                    </button>
+                      <option value="">Seleccione...</option>
+                      <option value="ASC">A - Z</option>
+                      <option value="DESC">Z - A</option>
+                    </select>
                   </div>
 
+                  {/* JUGADOR */}
                   <div className="filter-group">
-                    <p className="filter-title">DTE</p>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={handleDteAsc}
+                    <label className="filter-title">Jugador</label>
+                    <select
+                      className="filter-select"
+                      onChange={(e) => {
+                        if (e.target.value === "ASC") handleJugadorAsc();
+                        else if (e.target.value === "DESC") handleJugadorDesc();
+                      }}
+                      defaultValue=""
                     >
-                      A - Z
-                    </button>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={handleDteDesc}
-                    >
-                      Z - A
-                    </button>
+                      <option value="">Seleccione...</option>
+                      <option value="ASC">A - Z</option>
+                      <option value="DESC">Z - A</option>
+                    </select>
                   </div>
 
+                  {/* ACCIÓN */}
                   <div className="filter-group">
-                    <p className="filter-title">Jugador</p>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={handleJugadorAsc}
+                    <label className="filter-title">Acción</label>
+                    <select
+                      className="filter-select"
+                      onChange={(e) => handleFilterAccion(e.target.value)}
+                      defaultValue=""
                     >
-                      A - Z
-                    </button>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={handleJugadorDesc}
-                    >
-                      Z - A
-                    </button>
+                      <option value="">Seleccione...</option>
+                      <option value="AGREGAR">Agregar</option>
+                      <option value="ELIMINAR">Eliminar</option>
+                      <option value="SUSTITUIR">Sustituir</option>
+                    </select>
                   </div>
 
-                  <div className="filter-group">
-                    <p className="filter-title">Acción</p>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={() => handleFilterAccion("ELIMINAR")}
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={() => handleFilterAccion("AGREGAR")}
-                    >
-                      Agregar
-                    </button>
-                    <button
-                      className="filter-item"
-                      type="button"
-                      onClick={() => handleFilterAccion("SUSTITUIR")}
-                    >
-                      Sustituir
-                    </button>
-                  </div>
                 </div>
               )}
             </div>
+
           </div>
         </div>
 
