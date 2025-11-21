@@ -1,7 +1,55 @@
 import Sidebar from "../components/Sidebar";
 import "../Dashboard.css";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
+
+  const [usuariosActivos, setUsuariosActivos] = useState(0);
+  const [equiposActivos, setEquiposActivos] = useState(0);
+
+  useEffect(() => {
+    cargarUsuariosActivos();
+    cargarEquiposActivos();
+  }, []);
+
+  const cargarUsuariosActivos = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/usuarios/listar", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await res.json();
+
+      const activos = data.filter(u => u.estado === "ACTIVO").length;
+
+      setUsuariosActivos(activos);
+    } catch (err) {
+      console.error("Error cargando usuarios activos:", err);
+    }
+  };
+
+  const cargarEquiposActivos = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/equipos/listar", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await res.json();
+
+      const activos = data.filter(e => e.estado === "ACTIVO").length;
+
+      setEquiposActivos(activos);
+    } catch (err) {
+      console.error("Error cargando equipos activos:", err);
+    }
+  };
+  
   return (
     <div className="dashboard-container">
       <Sidebar />
@@ -20,20 +68,28 @@ export default function DashboardPage() {
                 <h2>4</h2>
               </div>
 
-              <div className="stat-card">
+              <div 
+                className="stat-card clickable"
+                onClick={() => navigate("/teams")}
+              >
                 <p>Equipos activos</p>
-                <h2>23</h2>
+                <h2>{equiposActivos}</h2>
               </div>
+
 
               <div className="stat-card">
                 <p>Total multas</p>
                 <h2>₡10,540.55</h2>
               </div>
 
-              <div className="stat-card">
+              <div 
+                className="stat-card clickable"
+                onClick={() => navigate("/users")}
+              >
                 <p>Usuarios registrados</p>
-                <h2>31</h2>
+                <h2>{usuariosActivos}</h2>
               </div>
+
             </div>
 
 
