@@ -46,20 +46,15 @@ export default function TeamRequestsPage() {
         await rechazarSolicitud(id);
       }
 
-      // quitar de las listas
       setSolicitudes((prev) => prev.filter((s) => s.id !== id));
       setFilteredSolicitudes((prev) => prev.filter((s) => s.id !== id));
 
-      // mostrar popup
       setShowMessage(type);
     } catch (err) {
       console.error("Error al procesar la solicitud:", err);
-      // aquí podrías mostrar un popup de error si quieres
     } finally {
-      // cerrar modal
       setSelectedSolicitud(null);
 
-      // ocultar popup después de 2s
       setTimeout(() => {
         setShowMessage(null);
       }, 2000);
@@ -101,7 +96,6 @@ export default function TeamRequestsPage() {
     setSearchTerm("");
   };
 
-  // --- Buscar ---
 
   const handleSearch = () => {
     const term = searchTerm.trim().toLowerCase();

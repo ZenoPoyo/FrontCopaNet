@@ -271,6 +271,7 @@ export default function AuditPage() {
           <button className="btn-export" onClick={exportarExcel}>
             Exportar
           </button>
+
         </div>
 
       </main>
